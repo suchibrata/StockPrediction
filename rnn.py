@@ -12,7 +12,7 @@ import pandas as pd
 # Importing the training set
 dataset_train = pd.read_csv('./historical_daily_data/tata_historical.csv')
 training_set = dataset_train.iloc[:, 1:2].values
-
+print(training_set)
 # Feature Scaling
 from sklearn.preprocessing import MinMaxScaler
 sc = MinMaxScaler(feature_range = (0, 1))
@@ -65,7 +65,7 @@ regressor.add(Dense(units = 1))
 regressor.compile(optimizer = 'adam', loss = 'mean_squared_error')
 
 # Fitting the RNN to the Training set
-regressor.fit(X_train, y_train, epochs = 100, batch_size = 32)
+regressor.fit(X_train, y_train, epochs = 10, batch_size = 32)
 
 
 
@@ -81,7 +81,7 @@ inputs = dataset_total[len(dataset_total) - len(dataset_test) - 60:].values
 inputs = inputs.reshape(-1,1)
 inputs = sc.transform(inputs)
 X_test = []
-for i in range(60, 80):
+for i in range(60,len(dataset_test)+60 ):
     X_test.append(inputs[i-60:i, 0])
 X_test = np.array(X_test)
 X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
@@ -96,4 +96,9 @@ predicted_stock_price = sc.inverse_transform(predicted_stock_price)
 # plt.ylabel('Google Stock Price')
 # plt.legend()
 # plt.show()
-final_result=pd.DataFrame(column=['Actual','Predicted'],data=[real_stock_price,predicted_stock_price])
+real_stock_price=real_stock_price.flatten()
+predicted_stock_price=predicted_stock_price.flatten()
+print(real_stock_price)
+print(predicted_stock_price)
+final_result=pd.DataFrame({'real':real_stock_price,'predicted':predicted_stock_price})
+final_result.to_csv('Result.csv')
