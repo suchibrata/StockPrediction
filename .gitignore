@@ -1,2 +1,4 @@
 /env
-nohup.out
+*.out
+*.pkl
+*.h5
