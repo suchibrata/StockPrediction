@@ -37,7 +37,7 @@ if __name__=='__main__':
     historical_dataset=pd.read_csv('./historical_daily_data/tata_historical.csv')
     historical_dataset=historical_dataset.tail(365)
     recent_dataset=pd.read_csv('./historical_daily_data/tata_recent.csv')
-    next_index=recent_dataset.shape[0]-2
+    #next_index=recent_dataset.shape[0]-2
 
 
 
@@ -87,6 +87,11 @@ if __name__=='__main__':
             working_dataset=working_dataset.append({'Open':o,'Close':c,'High':h,'Low':l,'Adj Close':adj_c,'Volume':v},ignore_index=True)
         print(row)
         c_df=c_df.append(row,ignore_index=True)
+   
+    for idx in range(n_steps):
+        pd='T{}'.format(idx+1)
+        c_df[pd]=c_df[pd].shift(idx+1)
+        
     c_df.to_csv('tata_motors_prediction.csv')
 
 
