@@ -91,7 +91,7 @@ if __name__=='__main__':
     c_df.to_csv('tata_motors_prediction_ns.csv')
     for idx in range(n_steps):
         pd='T{}'.format(idx+6)
-        c_df[pd]=c_df[pd].shift(idx+666666)
+        c_df[pd]=c_df[pd].shift(idx+6)
         
     c_df.to_csv('tata_motors_prediction_s.csv')
 
