@@ -27,14 +27,14 @@ if __name__=='__main__':
     close_scaler=[]
     close_lstm=[]
     for idx in range(n_steps):
-        cs=lstm.load_scaler('tm_close_minmax_t{}.pkl'.format(idx+1))
-        cl=lstm.load_lstm('tm_close_lstm.h5'.format(idx+1))
+        cs=lstm.load_scaler('sbin_close_minmax_t{}.pkl'.format(idx+1))
+        cl=lstm.load_lstm('sbin_close_lstm.h5'.format(idx+1))
         close_scaler.append(cs)
         close_lstm.append(cl)
 
-    historical_dataset=pd.read_csv('./historical_daily_data/tata_historical.csv')
+    historical_dataset=pd.read_csv('./historical_daily_data/sbin_historical.csv')
     historical_dataset=historical_dataset.tail(365)
-    recent_dataset=pd.read_csv('./historical_daily_data/tata_recent.csv')
+    recent_dataset=pd.read_csv('./historical_daily_data/sbin_recent.csv')
     #next_index=recent_dataset.shape[0]-2
 
     c_df = pd.DataFrame()
@@ -61,11 +61,11 @@ if __name__=='__main__':
 
         c_df = c_df.append(row, ignore_index=True)
 
-    c_df.to_csv('tata_motors_prediction_ns.csv')
+    c_df.to_csv('sbin_prediction_ns.csv')
     for idx in range(n_steps):
         pd = 'T{}'.format(idx + 1)
         c_df[pd] = c_df[pd].shift(idx + 1)
 
-    c_df.to_csv('tata_motors_prediction_s.csv')
+    c_df.to_csv('sbin_prediction_s.csv')
 
 
